@@ -17,7 +17,7 @@ struct Person {
     var avatar = UIImage(systemName: "person.circle")
     
 }
-
+//FIX-ME: - extension??
 extension Person {
     init() {
         self.name = ""
@@ -26,7 +26,7 @@ extension Person {
         self.notes = ""
     }
 }
-
+//FIX-ME: - global var
 var friends: [Person] = [
     Person(name: "Evgeniy Levchenko", phoneNumber: "333-242-2555", email: "q@gmail.com", notes: "JABSFJKSbfisdiubfusdbfbsdfsdbufibdsufbdsufbusboawjfyeeccfvgtyhuijokfsdbjnfwifjenjbvnweubfdskfmwfnsdkjfniowbvjajduwhd"),
     Person(name: "Matthew McConaughey", phoneNumber: "333-444-5555", email: "qw@gmail.com", notes: ""),

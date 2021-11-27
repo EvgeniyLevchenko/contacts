@@ -10,21 +10,21 @@ import UIKit
 class AddContactViewController: UIViewController, UINavigationControllerDelegate {
     
     @IBOutlet private weak var scrollView: UIScrollView!
-    
+//FIX-ME: - enter?
     @IBOutlet private weak var avatarImageView: UIImageView!
-    
+//FIX-ME: - enter?
     @IBOutlet private weak var nameTextField: UITextField!
-    
+//FIX-ME: - enter?
     @IBOutlet private weak var mobileTextField: UITextField!
-    
+//FIX-ME: - enter?
     @IBOutlet private weak var emailTextField: UITextField!
-    
+//FIX-ME: - enter?
     @IBOutlet private weak var notesTextView: UITextView!
-    
+//FIX-ME: - enter?
     @IBOutlet private weak var doneButton: UIBarButtonItem!
     
     var picker = UIImagePickerController()
-    
+//FIX-ME: - enter?
     var callback: ((Person) -> Void)?
     
     @IBAction private func doneButtonTapped(_ sender: Any) {
@@ -39,15 +39,15 @@ class AddContactViewController: UIViewController, UINavigationControllerDelegate
         super.viewDidLoad() 
         
         avatarImageViewSetUp()
-        
+//FIX-ME: - enter?
         delegatesSetUp()
-        
+//FIX-ME: - enter?
         notesTextViewSetUp()
-        
+//FIX-ME: - enter?
         hideKeyboardOnTap()
-        
+//FIX-ME: - enter?
         setKeyboardObservers()
-        
+//FIX-ME: - enter?
         setNameTextViewObserver()
     }
     

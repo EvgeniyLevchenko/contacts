@@ -8,24 +8,25 @@
 import UIKit
 
 class InfoViewController: UIViewController, UINavigationControllerDelegate {
-    
+//FIX-ME: - private, private, private, ...
     @IBOutlet weak var avatarImage: UIImageView!
-    
+//FIX-ME: - enter?
     @IBOutlet weak var nameLabel: UILabel!
-    
+//FIX-ME: - enter?
     @IBOutlet weak var mobileLabel: UILabel!
-    
+//FIX-ME: - enter?
     @IBOutlet weak var emailLabel: UILabel!
-    
+//FIX-ME: - enter?
     @IBOutlet weak var notesLabel: UILabel!
     
     var personInfo = Person()
-    
+//FIX-ME: - enter?
     var isGoingForward: Bool = false
-    
+//FIX-ME: - enter?
     var callback: ((Person) -> Void)?
-    
+//FIX-ME: - action
     @IBAction func editButtonTapped(_ sender: Any) {
+//FIX-ME: - literals
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         if let editContactViewController = storyboard.instantiateViewController(identifier: "editContactViewController") as? EditContactViewController {
             var personInfoToPass = Person()
@@ -52,7 +53,7 @@ class InfoViewController: UIViewController, UINavigationControllerDelegate {
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+//FIX-ME: - method
         avatarImage.image = personInfo.avatar
         nameLabel.text = personInfo.name
         mobileLabel.text = personInfo.phoneNumber
