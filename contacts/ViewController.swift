@@ -11,17 +11,17 @@ class ViewController: UIViewController, UINavigationControllerDelegate {
 
     @IBOutlet weak var contactsTableView: UITableView!
 //FIX-ME: - action < viewDidLoad
+// ?
     @IBAction private func addContact(_ sender: Any) {
-//FIX-ME: - literals
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        if let addContactViewController = storyboard.instantiateViewController(identifier: "addContactViewController") as? AddContactViewController {
+        let storyboardName = "Main"
+        let storyboard = UIStoryboard(name: storyboardName, bundle: nil)
+        let vcIndentifier = "addContactViewController"
+        if let addContactViewController = storyboard.instantiateViewController(identifier: vcIndentifier) as? AddContactViewController {
             addContactViewController.callback = { person in
                 friends.append(person)
-//FIX-ME: - enter?
                 friends.sort(by: {
                     $0.name < $1.name
                 })
-//FIX-ME: - enter?
                 self.contactsTableView.reloadData()
             }
             show(addContactViewController, sender: nil)
@@ -30,9 +30,8 @@ class ViewController: UIViewController, UINavigationControllerDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-//FIX-ME: - method
-        contactsTableView.delegate = self
-        contactsTableView.dataSource = self
+        
+        contactsTableViewSetUp()
         
         friends.sort(by: {
             $0.name < $1.name
@@ -45,12 +44,7 @@ class ViewController: UIViewController, UINavigationControllerDelegate {
             recent.insert(recent[indexPath.row], at: 0)
             recent.remove(at: indexPath.row + 1)
         case 1:
-            if let index = recent.firstIndex(where: {
-//FIX-ME: - Equatable
-                $0.name == friends[indexPath.row].name &&
-                    $0.phoneNumber == friends[indexPath.row].phoneNumber &&
-                    $0.email == friends[indexPath.row].email
-            }) {
+            if let index = recent.firstIndex(where: { $0 == friends[indexPath.row] }) {
                 recent.insert(recent[index], at: 0)
                 recent.remove(at: index + 1)
             } else {
@@ -69,23 +63,17 @@ class ViewController: UIViewController, UINavigationControllerDelegate {
     }
     
     private func passDataToInfoVC(from indexPath: IndexPath) {
-//FIX-ME: - literals
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        
-        if let infoViewController = storyboard.instantiateViewController(identifier: "infoViewController") as? InfoViewController {
+        let storyboardName = "Main"
+        let storyboard = UIStoryboard(name: storyboardName, bundle: nil)
+        let vcIdentifier = "infoViewController"
+        if let infoViewController = storyboard.instantiateViewController(identifier: vcIdentifier) as? InfoViewController {
             switch indexPath.section {
             case 0:
                 infoViewController.personInfo = recent[indexPath.row]
-//FIX-ME: - callback
-                infoViewController.callback = { person in
-                    if let index = friends.firstIndex(where: {
-//FIX-ME: - Equatable
-                        $0.name == recent[indexPath.row].name &&
-                        $0.phoneNumber == recent[indexPath.row].phoneNumber &&
-                        $0.email == recent[indexPath.row].email
-                    }) {
-                        friends[index] = person
-                        recent[indexPath.row] = person
+                infoViewController.callback = {
+                    if let index = friends.firstIndex(where: { $0 == recent[indexPath.row] }) {
+                        friends[index] = $0
+                        recent[indexPath.row] = $0
                     }
                     
                     self.contactsTableView.reloadData()
@@ -93,12 +81,7 @@ class ViewController: UIViewController, UINavigationControllerDelegate {
             case 1:
                 infoViewController.personInfo = friends[indexPath.row]
                 infoViewController.callback = { person in
-                    if let index = recent.firstIndex(where: {
-//FIX-ME: - Equatable
-                        $0.name == friends[indexPath.row].name &&
-                        $0.phoneNumber == friends[indexPath.row].phoneNumber &&
-                        $0.email == friends[indexPath.row].email
-                    }) {
+                    if let index = recent.firstIndex(where: { $0 == friends[indexPath.row] }) {
                         recent[index] = person
                         friends[indexPath.row] = person
                     }
@@ -120,15 +103,21 @@ class ViewController: UIViewController, UINavigationControllerDelegate {
 
 extension ViewController: UITableViewDelegate, UITableViewDataSource {
     
+    private func contactsTableViewSetUp() {
+        contactsTableView.delegate = self
+        contactsTableView.dataSource = self
+    }
+    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 60
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        let recentsTitle = "Recents"
+        let friendsTitle = "Friends"
         switch section {
-//FIX-ME: - literals
-        case 0: return "Recents"
-        case 1: return "Friends"
+        case 0: return recentsTitle
+        case 1: return friendsTitle
         default: return ""
         }
     }
@@ -139,30 +128,21 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
-//FIX-ME: - case style?
-        case 0:
-            if recent.isEmpty {
-                return 1
-            } else {
-                return recent.count
-            }
+        case 0: return recent.isEmpty ? 1 : recent.count
         case 1: return friends.count
         default: return 1
         }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-//FIX-ME: - default ceell
-//FIX-ME: - literals
-        let cell = tableView.dequeueReusableCell(withIdentifier: "contactCell", for: indexPath)
-
-        cell.textLabel?.font = UIFont(name: "System", size: 25)
+        let cellIdentifier = "contactCell"
+        let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath)
         
         switch indexPath.section {
         case 0:
             if recent.isEmpty {
-//FIX-ME: - literals
-                cell.textLabel?.text = "No recents yet"
+                let recentCellText = "No recents yet"
+                cell.textLabel?.text = recentCellText
             } else {
                 cell.imageView?.image = recent[indexPath.row].avatar
                 cell.textLabel?.text = recent[indexPath.row].name
@@ -173,14 +153,12 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
             cell.textLabel?.text = friends[indexPath.row].name
             cell.accessoryType = .detailDisclosureButton
         default:
-//FIX-ME: - ???
-            cell.textLabel?.text = ""
+            break
         }
         
         return cell
     }
 
-    
     func tableView(_ tableView: UITableView, accessoryButtonTappedForRowWith indexPath: IndexPath) {
         reloadRecents(indexPath: indexPath)
         passDataToInfoVC(from: indexPath)
