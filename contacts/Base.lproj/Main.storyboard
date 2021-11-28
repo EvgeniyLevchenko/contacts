@@ -69,8 +69,8 @@
                                                 <textInputTraits key="textInputTraits" keyboardType="emailAddress"/>
                                             </textField>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Amt-el-wRW">
-                                                <rect key="frame" x="170" y="67" width="72" height="30"/>
-                                                <state key="normal" title="Add photo"/>
+                                                <rect key="frame" x="170" y="67" width="30" height="30"/>
+                                                <state key="normal" title="Edit"/>
                                                 <connections>
                                                     <action selector="addPhotoButtonTapped:" destination="mVG-9E-R5j" eventType="touchUpInside" id="wVV-OW-Agb"/>
                                                 </connections>
